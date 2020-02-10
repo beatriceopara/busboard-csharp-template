@@ -15,23 +15,23 @@ namespace BusBoard
         {
             var inputCode = BusCode();
             var response = TflApi.DoApiStuff(inputCode);
-            BusStopCode(response);
+            BusStopName(response);
             DisplayBusStops(response);
             
         }
 
         private static string BusCode()
         {
-            Console.WriteLine("Please enter your stop code: ");
+            Console.Write("Please enter your stop code: ");
             var inputCode = Console.ReadLine();
-            Console.WriteLine("Your at bus code " + inputCode);
-
+            Console.Clear();
+            Console.WriteLine("Here is the requested information for bus stop id " + inputCode);
             return inputCode;
+            
         }
         
-        private static void BusStopCode(List<BusStopObjects> response)
+        private static void BusStopName(List<BusStopObjects> response)
         {
-            
             Console.WriteLine("Welcome to Bus Stop: " + response[0].stationName);
 
         }
@@ -39,7 +39,6 @@ namespace BusBoard
         
         private static void DisplayBusStops(List<BusStopObjects> response)
         {
-            
             var allBuses = response;
             var firstFiveItems = response.Take(5);
 

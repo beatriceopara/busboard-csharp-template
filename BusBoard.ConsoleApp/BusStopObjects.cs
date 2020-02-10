@@ -7,6 +7,6 @@
       public string destinationName { get; set; }
       public string lineName { get; set; }
       public int timeToStation { get; set; }
-
+      
     }
 }
