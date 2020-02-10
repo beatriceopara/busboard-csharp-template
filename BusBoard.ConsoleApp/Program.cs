@@ -44,8 +44,12 @@ namespace BusBoard
             Console.WriteLine("Bus Name  | Destination | Countdown");
             foreach (var bus in firstFiveItems)
             {
-                Console.WriteLine($"{bus.lineName} {bus.destinationName} {bus.timeToStation/60} minutes");
-                //divided seconds by 60secs to create minutes 
+                Console.WriteLine($"{bus.lineName} {bus.destinationName} {bus.timeToStation/60} mins");
+                /*
+                 divided seconds by 60secs to create minutes
+                https://stackoverflow.com/questions/10935459/coverting-int-to-decimal-following-mm-ss-format
+                https://stackoverflow.com/questions/3665012/how-to-convert-seconds-in-minsec-format/43282139
+                */
             }
             
         }
