@@ -33,7 +33,6 @@ namespace BusBoard
         private static void BusStopName(List<BusStopObjects> response)
         {
             Console.WriteLine("Welcome to Bus Stop: " + response[0].stationName);
-
         }
         
         
@@ -42,10 +41,11 @@ namespace BusBoard
             var allBuses = response;
             var firstFiveItems = response.Take(5);
 
-            Console.WriteLine("Bus Name, Destination, Countdown");
+            Console.WriteLine("Bus Name  | Destination | Countdown");
             foreach (var bus in firstFiveItems)
             {
-                Console.WriteLine($"{bus.lineName} {bus.destinationName} {bus.timeToStation}");
+                Console.WriteLine($"{bus.lineName} {bus.destinationName} {bus.timeToStation/60} minutes");
+                //divided seconds by 60secs to create minutes 
             }
             
         }
