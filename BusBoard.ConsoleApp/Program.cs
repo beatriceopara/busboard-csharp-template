@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -9,10 +10,12 @@ namespace BusBoard
     {
         static void Main(string[] args)
         {
-            var client = new RestClient("https://api.tfl.gov.uk");
-            var request = new RestRequest("StopPoint/490008660N/Arrivals");
-            List<BusStopObjects> response = client.Get<List<BusStopObjects>>(request).Data;
-
+            var response = TflApi.DoApiStuff();
+            DisplayBusStops(response);
+           
+        }
+        private static void DisplayBusStops(List<BusStopObjects> response)
+        {
             Console.WriteLine(response[0].stationName);
         }
     }
