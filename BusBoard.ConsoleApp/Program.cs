@@ -13,28 +13,43 @@ namespace BusBoard
     {
         static void Main(string[] args)
         {
-            var response = TflApi.DoApiStuff();
+            var inputCode = BusCode();
+            var response = TflApi.DoApiStuff(inputCode);
+            BusStopCode(response);
             DisplayBusStops(response);
-           
+            
         }
+
+        private static string BusCode()
+        {
+            Console.WriteLine("Please enter your stop code: ");
+            var inputCode = Console.ReadLine();
+            Console.WriteLine("Your at bus code " + inputCode);
+
+            return inputCode;
+        }
+        
+        private static void BusStopCode(List<BusStopObjects> response)
+        {
+            
+            Console.WriteLine("Welcome to Bus Stop: " + response[0].stationName);
+
+        }
+        
+        
         private static void DisplayBusStops(List<BusStopObjects> response)
         {
+            
             var allBuses = response;
             var firstFiveItems = response.Take(5);
 
+            Console.WriteLine("Bus Name, Destination, Countdown");
             foreach (var bus in firstFiveItems)
             {
-                Console.WriteLine(bus.destinationName);
+                Console.WriteLine($"{bus.lineName} {bus.destinationName} {bus.timeToStation}");
             }
             
-            // List<BusStopObjects> myBusList = new List<BusStopObjects>();
-            
-            // foreach (var buses in )
-            // {
-            //     
-            // }
-            //prints out the next 5 buses at our bus stop
-            // Console.WriteLine(response[0].destinationName);
         }
+
     }
 }
