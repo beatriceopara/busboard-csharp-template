@@ -5,7 +5,7 @@ namespace BusBoard
 {
     public class TflApi
     {
-        public static List<BusStopObjects> DoApiStuff(string inputCode)
+        public static List<BusStopObjects> GetBusStopInfo(string inputCode)
         {
             var client = new RestClient("https://api.tfl.gov.uk");
             var request = new RestRequest($"StopPoint/{inputCode}/Arrivals");

@@ -13,40 +13,37 @@ namespace BusBoard
     {
         static void Main(string[] args)
         {
-            var inputCode = BusCode();
-            var response = TflApi.DoApiStuff(inputCode);
-            BusStopName(response);
-            DisplayBusStops(response);
-            
+            var busStopCode = GetBusStopCode();
+            var response = TflApi.GetBusStopInfo(busStopCode);
+            PrintBusStopName(response);
+            DisplayNextFiveBuses(response);
         }
 
-        private static string BusCode()
+        private static string GetBusStopCode()
         {
             Console.Write("Please enter your stop code: ");
-            var inputCode = Console.ReadLine();
+            var busStopCode = Console.ReadLine();
             Console.Clear();
-            Console.WriteLine("Here is the requested information for bus stop id " + inputCode);
-            return inputCode;
-            
+            Console.WriteLine("Here is the requested information for bus stop id " + busStopCode);
+            return busStopCode;
         }
         
-        private static void BusStopName(List<BusStopObjects> response)
+        private static void PrintBusStopName(List<BusStopObjects> response)
         {
             Console.WriteLine("Welcome to Bus Stop: " + response[0].stationName);
         }
         
         
-        private static void DisplayBusStops(List<BusStopObjects> response)
+        private static void DisplayNextFiveBuses(List<BusStopObjects> response)
         {
-            var allBuses = response;
             var firstFiveItems = response.Take(5);
 
-            Console.WriteLine("Bus Name  | Destination | Countdown");
+            Console.WriteLine("Bus Number | Destination | Countdown");
             foreach (var bus in firstFiveItems)
             {
                 Console.WriteLine($"{bus.lineName} {bus.destinationName} {bus.timeToStation/60} mins");
                 /*
-                 divided seconds by 60secs to create minutes
+                divide time value by 60
                 https://stackoverflow.com/questions/10935459/coverting-int-to-decimal-following-mm-ss-format
                 https://stackoverflow.com/questions/3665012/how-to-convert-seconds-in-minsec-format/43282139
                 */
