@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using Microsoft.VisualBasic;
@@ -15,8 +16,20 @@ namespace BusBoard
         {
             var busStopCode = GetBusStopCode();
             var response = TflApi.GetBusStopInfo(busStopCode);
-            PrintBusStopName(response);
-            DisplayNextFiveBuses(response);
+            //if response is valid then continue 
+            //else request new bus stop code 
+
+            
+            if (response[0].destinationName == null)
+            {
+                Console.WriteLine("Invalid bus stop code entered, please re-enter valid stop code");
+                
+            }
+            else
+            {
+                PrintBusStopName(response);
+                DisplayNextFiveBuses(response); 
+            }
         }
 
         private static string GetBusStopCode()
