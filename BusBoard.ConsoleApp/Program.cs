@@ -20,15 +20,14 @@ namespace BusBoard
             //else request new bus stop code 
 
             
-            if (response[0].destinationName == null)
-            {
-                Console.WriteLine("Invalid bus stop code entered, please re-enter valid stop code");
-                
-            }
-            else
+            if (BusStopCodeIsValid(response))
             {
                 PrintBusStopName(response);
                 DisplayNextFiveBuses(response); 
+            }
+            else
+            {
+                Console.WriteLine("Invalid bus stop code entered, please re-enter valid stop code");
             }
         }
 
@@ -39,6 +38,15 @@ namespace BusBoard
             Console.Clear();
             Console.WriteLine("Here is the requested information for bus stop id " + busStopCode);
             return busStopCode;
+        }
+
+        private static bool BusStopCodeIsValid(List<BusStopObjects> response)
+        {
+            if (response[0].destinationName == null)
+            {
+                return false;
+            }
+            return true;
         }
         
         private static void PrintBusStopName(List<BusStopObjects> response)
