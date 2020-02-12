@@ -12,50 +12,43 @@ namespace BusBoard
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            var busStopCode = GetBusStopCode();
-            var response = TflApi.GetBusStopInfo(busStopCode);
-            //if response is valid then continue 
-            //else request new bus stop code 
-
+            //get input 
+            //do something 
+            //display something 
             
-            if (BusStopCodeIsValid(response))
-            {
-                PrintBusStopName(response);
-                DisplayNextFiveBuses(response); 
-            }
-            else
-            {
-                Console.WriteLine("Invalid bus stop code entered, please re-enter valid stop code");
-            }
+            var postcode = AskUserForPostCode();
+            
+            var postCodeDetails = PostcodeApi.GetPostCodeInfo(postcode);
+
+            var nearestStop = TflApi.GetNearestBusStop(postCodeDetails.Result.Latitude, postCodeDetails.Result.Longitude);
+            
+            var nextBuses = TflApi.GetBuses(nearestStop.naptanId);
+            
+            PrintBusStopName(nearestStop);
+            
+            DisplayNextFiveBuses(nextBuses);
+          
         }
 
-        private static string GetBusStopCode()
-        {
-            Console.Write("Please enter your stop code: ");
-            var busStopCode = Console.ReadLine();
-            Console.Clear();
-            Console.WriteLine("Here is the requested information for bus stop id " + busStopCode);
-            return busStopCode;
-        }
-
-        private static bool BusStopCodeIsValid(List<BusStopObjects> response)
-        {
-            if (response[0].destinationName == null)
-            {
-                return false;
-            }
-            return true;
-        }
         
-        private static void PrintBusStopName(List<BusStopObjects> response)
+        private static string AskUserForPostCode()
         {
-            Console.WriteLine("Welcome to Bus Stop: " + response[0].stationName);
+            Console.WriteLine("Please enter your postcode: ");
+            var userPostCode = Console.ReadLine();
+            
+            return userPostCode;
         }
         
         
-        private static void DisplayNextFiveBuses(List<BusStopObjects> response)
+        private static void PrintBusStopName(BusStop busStop)
+        {
+            Console.WriteLine("Welcome to Bus Stop: " + busStop.commonName);
+        }
+        
+        
+        private static void DisplayNextFiveBuses(List<BusArriveAtStop> response)
         {
             var firstFiveItems = response.Take(5);
 

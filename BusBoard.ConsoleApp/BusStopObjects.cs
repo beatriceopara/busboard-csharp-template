@@ -1,6 +1,6 @@
 ﻿namespace BusBoard
 {
-    public class BusStopObjects
+    public class BusArriveAtStop
     {
         
       public string stationName { get; set; }
